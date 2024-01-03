@@ -10,3 +10,4 @@ diesel = { version = "2.1.0", features = ["postgres", "chrono"] }
 dotenvy = "0.15"
 chrono = {  version = "0.4.31", features = ["serde"] }
 rocket = { version = "0.5.0", features = ["json"] }
+rocket_cors = "0.6.0"
