@@ -7,7 +7,7 @@ const TodoList = () => {
   const queryClient = useQueryClient();
   const [inputValue, setInputValue] = useState('');
   const [dueDate, setDueDate] = useState(null); 
-  const backendUrl = process.env.BACKEND_URL || 'http://backend:8000';
+  const backendUrl = process.env.BACKEND_URL || 'http://backend';
   // Fetch tasks
   const { data: todos = [], isLoading } = useQuery('todos', async () => {
     const response = await fetch(`${backendUrl}/todo`);
