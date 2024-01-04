@@ -1,13 +1,18 @@
 import React from 'react';
 import './App.css';
+import { useQuery, useMutation, QueryClient, QueryClientProvider } from 'react-query';
 import TodoList from './TodoList';
 
-function App() {
+const queryClient = new QueryClient();
+
+const App = () => {
   return (
-    <div className='todo-app'>
+    <QueryClientProvider client={queryClient}>
+      <div className='todo-app'>
       <TodoList />
-    </div>
+      </div>
+    </QueryClientProvider>
   );
-}
+};
 
 export default App;
