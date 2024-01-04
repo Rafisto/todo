@@ -10,13 +10,13 @@ const TodoList = () => {
   const backendUrl = process.env.BACKEND_URL || 'http://backend:8000';
   // Fetch tasks
   const { data: todos = [], isLoading } = useQuery('todos', async () => {
-    const response = await fetch('BACKEND_URL/todo');
+    const response = await fetch(`${backendUrl}/todo`);
     const responseData = await response.json();
     return responseData;
   });
   // Add task mutation
   const addTaskMutation = useMutation((newTodo) =>
-    fetch('${backendUrl}/todo', {
+    fetch(`${backendUrl}/todo`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const TodoList = () => {
 
   // Update task mutation
   const updateTaskMutation = useMutation(({ taskId, updatedTodo }) =>
-    fetch('${backendUrl}/todo/${taskId}', {
+    fetch(`${backendUrl}/todo/${taskId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ const TodoList = () => {
 
   // Delete task mutation
   const deleteTaskMutation = useMutation((taskId) =>
-  fetch('${backendUrl}/todo/${taskId}', {
+  fetch(`${backendUrl}/todo/${taskId}`, {
     method: 'DELETE',
   })
 );
