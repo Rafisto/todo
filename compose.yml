@@ -8,28 +8,22 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
-    ports:
-      - 5432:5432
     volumes:
       - ./database/data:/var/lib/postgresql/data
       - ./database/init/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - todo_network
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     restart: always
-    ports:
-      - 80:8000
     depends_on:
       - db
     environment:
       - ROCKET_ADDRESS=0.0.0.0
       - ROCKET_PORT=8000
       - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
-    networks:
-      - todo_network  
+    ports:
+      - 80:8000
   frontend:
     build:
       context: ./frontend
@@ -37,11 +31,8 @@ services:
     restart: always
     ports:
       - 3000:3000
+    depends_on:
+      - db  
+      - backend
     environment:
-      - BACKEND_URL=http://backend
-    networks:
-      - todo_network
-
-networks:
-  todo_network:
-    driver: bridge
+      - BACKEND_URL=http://localhost:80

@@ -7,7 +7,7 @@ const TodoList = () => {
   const queryClient = useQueryClient();
   const [inputValue, setInputValue] = useState('');
   const [dueDate, setDueDate] = useState(null); 
-  const backendUrl = process.env.BACKEND_URL || 'http://backend';
+  const backendUrl = process.env.BACKEND_URL || 'http://localhost:80';
   // Fetch tasks
   const { data: todos = [], isLoading } = useQuery('todos', async () => {
     const response = await fetch(`${backendUrl}/todo`);
@@ -42,7 +42,7 @@ const TodoList = () => {
       addTaskMutation.mutate(newTodo, {
         onSuccess: () => {
           setInputValue('');
-          setDueDate('');
+          setDueDate(null);
         },
       });
     }
