@@ -7,21 +7,16 @@ const TodoList = () => {
   const queryClient = useQueryClient();
   const [inputValue, setInputValue] = useState('');
   const [dueDate, setDueDate] = useState(null); 
-
+  const backendUrl = process.env.BACKEND_URL || 'http://backend:8000';
   // Fetch tasks
   const { data: todos = [], isLoading } = useQuery('todos', async () => {
-    const response = await fetch('http://127.0.0.1:80/todo');
+    const response = await fetch('BACKEND_URL/todo');
     const responseData = await response.json();
     return responseData;
   });
-
-
-
-
-  
   // Add task mutation
   const addTaskMutation = useMutation((newTodo) =>
-    fetch('http://127.0.0.1:80/todo', {
+    fetch('${backendUrl}/todo', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -47,7 +42,7 @@ const TodoList = () => {
       addTaskMutation.mutate(newTodo, {
         onSuccess: () => {
           setInputValue('');
-          setDueDate(null);
+          setDueDate('');
         },
       });
     }
@@ -55,7 +50,7 @@ const TodoList = () => {
 
   // Update task mutation
   const updateTaskMutation = useMutation(({ taskId, updatedTodo }) =>
-    fetch(`http://127.0.0.1:80/todo/${taskId}`, {
+    fetch('${backendUrl}/todo/${taskId}', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -95,7 +90,7 @@ const TodoList = () => {
 
   // Delete task mutation
   const deleteTaskMutation = useMutation((taskId) =>
-  fetch(`http://127.0.0.1:80/todo/${taskId}`, {
+  fetch('${backendUrl}/todo/${taskId}', {
     method: 'DELETE',
   })
 );
