@@ -15,5 +15,5 @@ This command will load the configuration from `compose.yml` and create docker co
 Services:
 - [x] Database
 - [x] Backend
-- [ ] Frontend
+- [x] Frontend
 
